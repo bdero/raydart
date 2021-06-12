@@ -1,0 +1,24 @@
+[submodule "deps/bgfx.cmake"]
+	path = deps/bgfx.cmake
+	url = https://github.com/JoshuaBrookover/bgfx.cmake.git
+[submodule "deps/sdl2_cmake_scripts"]
+	path = deps/sdl2_cmake_scripts
+	url = https://github.com/tcbrindle/sdl2-cmake-scripts.git
+[submodule "deps/SDL2"]
+	path = deps/SDL2
+	url = https://github.com/spurious/SDL-mirror.git
+[submodule "deps/entt"]
+	path = deps/entt
+	url = https://github.com/skypjack/entt.git
+[submodule "deps/cereal"]
+	path = deps/cereal
+	url = https://github.com/USCiLab/cereal.git
+[submodule "deps/glm"]
+	path = deps/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "deps/bgfx-imgui/deps/dear-imgui"]
+	path = deps/bgfx-imgui/deps/dear-imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "deps/raylib"]
+	path = deps/raylib
+	url = https://github.com/raysan5/raylib.git
