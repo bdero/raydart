@@ -1,36 +1,46 @@
 import 'dart:ffi' as ffi;
-import 'dart:io' show Directory, Platform;
 
 import 'package:ffi/ffi.dart';
-import 'package:path/path.dart' as path;
 
-import 'generated/raylib.dart' as ray_ffi;
-
-extension StringExtensions on String {
-  ffi.Pointer<ffi.Int8> toInt8() {
-    return toNativeUtf8().cast<ffi.Int8>();
-  }
-}
+import 'generated/raylib.dart';
+import 'raylib.dart';
 
 void main() {
-  var suffix = 'so';
-  if (Platform.isMacOS) suffix = 'dylib';
-  if (Platform.isWindows) suffix = 'dll';
+  ray.InitWindow(800, 600, 'test window'.toInt8());
+  ray.SetTargetFPS(60);
 
-  final lib = ffi.DynamicLibrary.open(
-      path.join(Directory.current.path, 'raylib.$suffix'));
-  final Ray = ray_ffi.NativeLibrary(lib);
+  final p_camera = malloc.allocate<Camera3D>(ffi.sizeOf<Camera3D>());
+  final camera = p_camera.ref
+    ..position.x = 4
+    ..position.y = 2
+    ..position.z = 4
+    ..target.x = 0
+    ..target.y = 1.8
+    ..target.z = 0
+    ..up.x = 0
+    ..up.y = 1
+    ..up.z = 0
+    ..fovy = 60
+    ..projection = CameraProjection.CAMERA_PERSPECTIVE;
 
-  Ray.InitWindow(800, 600, 'test window'.toInt8());
-  Ray.SetTargetFPS(60);
+  ray.SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
 
-  while (Ray.WindowShouldClose() == 0) {
-    Ray.BeginDrawing();
+  while (ray.WindowShouldClose() == 0) {
+    ray.UpdateCamera(p_camera);
+    ray.BeginDrawing();
+    {
+      ray.ClearBackground(ray.GetColor(0xff9999ff));
 
-    Ray.ClearBackground(Ray.GetColor(0xff9999ff));
-
-    Ray.EndDrawing();
+      ray.BeginMode3D(camera);
+      {
+        //final v = Vector3();
+        //print(v.x);
+        //ray.DrawCube(v, 2, 2, 2, ray.GetColor(0x0088ffff));
+      }
+      ray.EndMode3D();
+    }
+    ray.EndDrawing();
   }
 
-  Ray.CloseWindow();
+  ray.CloseWindow();
 }
