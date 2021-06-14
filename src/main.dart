@@ -4,7 +4,7 @@ import 'dart:io' show Directory, Platform;
 import 'package:ffi/ffi.dart';
 import 'package:path/path.dart' as path;
 
-import 'raylib.dart' as ray_ffi;
+import 'generated/raylib.dart' as ray_ffi;
 
 extension StringExtensions on String {
   ffi.Pointer<ffi.Int8> toInt8() {
