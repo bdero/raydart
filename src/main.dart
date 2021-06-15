@@ -2,20 +2,19 @@ import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
 
-import 'generated/raylib.dart';
 import 'raylib.dart';
 
 void main() {
   ray.InitWindow(800, 600, 'test window'.toInt8());
   ray.SetTargetFPS(60);
 
-  final p_camera = malloc.allocate<Camera3D>(ffi.sizeOf<Camera3D>());
+  final p_camera = NewCamera3D();
   final camera = p_camera.ref
     ..position.x = 4
     ..position.y = 2
     ..position.z = 4
     ..target.x = 0
-    ..target.y = 1.8
+    ..target.y = 0
     ..target.z = 0
     ..up.x = 0
     ..up.y = 1
@@ -33,9 +32,15 @@ void main() {
 
       ray.BeginMode3D(camera);
       {
-        //final v = Vector3();
-        //print(v.x);
-        //ray.DrawCube(v, 2, 2, 2, ray.GetColor(0x0088ffff));
+        ray.DrawCube(
+            NewVector3().ref
+              ..x = 0
+              ..y = 0
+              ..z = 0,
+            1,
+            1,
+            1,
+            ray.GetColor(0xffffffff));
       }
       ray.EndMode3D();
     }
